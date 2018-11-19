@@ -1,4 +1,8 @@
 # README
+#TTP-FS-20180728-backend
+This a Ruby-on-rails backend for TTP-FS-20180728
+For frontend please check
+LINK
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
@@ -21,5 +25,3 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
-# TTP-FS-20180728-backend
