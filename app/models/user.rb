@@ -5,4 +5,5 @@ class User < ApplicationRecord
   has_many :trades, through: :user_trades
 
   has_many :stocks
+
 end
