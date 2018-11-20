@@ -28,17 +28,10 @@ ActiveRecord::Schema.define(version: 2018_11_19_232359) do
     t.string "stock_symbol"
     t.integer "quantity"
     t.string "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "user_trades", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "trade_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["trade_id"], name: "index_user_trades_on_trade_id"
-    t.index ["user_id"], name: "index_user_trades_on_user_id"
+    t.index ["user_id"], name: "index_trades_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -51,6 +44,5 @@ ActiveRecord::Schema.define(version: 2018_11_19_232359) do
   end
 
   add_foreign_key "stocks", "users"
-  add_foreign_key "user_trades", "trades"
-  add_foreign_key "user_trades", "users"
+  add_foreign_key "trades", "users"
 end
