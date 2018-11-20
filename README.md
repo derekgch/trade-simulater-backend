@@ -1,6 +1,6 @@
 # README
 # TTP-FS-20180728-backend
-## This a Ruby-on-rails backend for TTP-FS-20180728
+## This is a Ruby-on-rails backend for TTP-FS-20180728
 ### For frontend please check
 LINK
 
