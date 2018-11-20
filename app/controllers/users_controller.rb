@@ -28,7 +28,8 @@ class UsersController < ApplicationController
     def trades
         if(requires_login && authorized?(params[:id]))
             @user = User.find(params[:id])
-            if @user.executeTrade("wwwwhhhattt trade")
+            # byebug
+            if @user.executeTrade(params[:trade])
                 render json: {trades:@user.trades, stocks: @user.stocks , head:200}
             else
                 render json: {ERR: "Aborted! Not enough stocks to sell!", head:501}
