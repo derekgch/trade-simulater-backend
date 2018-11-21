@@ -4,7 +4,11 @@ class UsersController < ApplicationController
     def show
         if(requires_login && authorized?(params[:id]))
             @user = User.find(params[:id])
-            render json: {user: @user.username, stocks:@user.stocks, trades:@user.trades, head:200}
+            render json: {user: @user.username, 
+                stocks:@user.stocks, 
+                trades:@user.trades, 
+                balance: @user.balance,
+                head:200}
         else
             render json: {message: "Please login", head:404}
         end
@@ -14,6 +18,7 @@ class UsersController < ApplicationController
         user = User.create(username: params[:username], email: params[:email], password: params[:password], balance:5000)
         if user.valid?
             render json: {
+                ok: true,
                 user: user.email,
                 token: get_token(payload( user.email, user.id ))
             }
