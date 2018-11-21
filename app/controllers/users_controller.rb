@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     end
 
     def create
-        user = User.create(username: params[:username], email: params[:email], password: params[:password], balance:5000)
+        user = User.create(username: params[:username], email: params[:email], password: params[:password], balance:5000.00)
         if user.valid?
             render json: {
                 ok: true,
