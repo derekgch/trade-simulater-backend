@@ -9,10 +9,10 @@
 u1 = User.create(username:"bbb", email:"bbb@bbb.com", password:"123", balance:"5000")
 u2 = User.create(username:"abc", email:"abc@bbb.com", password:"123", balance:"5000")
 
-t1 = Trade.create(stock_symbol:"AAPL", price:"200.02", quantity:10, user:u1)
-t2 = Trade.create(stock_symbol:"AAPL", price:"200.02", quantity:100, user:u1)
-t3 = Trade.create(stock_symbol:"MSFT", price:"210.02", quantity:20, user:u2)
-t4 = Trade.create(stock_symbol:"INTC", price:"202.02", quantity:30, user:u2)
+t1 = Trade.create(stock_symbol:"AAPL", price:"200.02", quantity:10, user:u1, action:"buy")
+t2 = Trade.create(stock_symbol:"AAPL", price:"200.02", quantity:100, user:u1,action:"buy")
+t3 = Trade.create(stock_symbol:"MSFT", price:"210.02", quantity:20, user:u2, action:"buy")
+t4 = Trade.create(stock_symbol:"INTC", price:"202.02", quantity:30, user:u2, action:"buy")
 
 
 s1 = Stock.create(stock_symbol:"AAPL", quantity:110, user:u1)

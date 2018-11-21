@@ -13,15 +13,70 @@ class User < ApplicationRecord
     # return error if there's a selling less than 0
     #update balance
     #update stocks
-    #
-    
-    byebug
-    # result = JSON.parse(trade)
-    puts "executed trade!"
-    puts trade
+    #trade[:sym], trade[:action], trade[:quantity],trade[:price]
+    # byebug
+    validTrade = false;
+    if(trade[:action] == "buy")
+      newBalance = self.balance - trade[:price].to_f*trade[:quantity].to_i;
+      # byebug
+
+      if newBalance > 0
+        validTrade = true;
+      end
+
+    elsif (trade[:action]== "sell")
+      newBalance = self.balance + trade[:price].to_f*trade[:quantity].to_i;
+      foundStock = self.stocks.find{|item| item.stock_symbol == trade.stock_symbol};
+      if(foundStock)
+        if foundStock.quantity > trade[:quantity]
+          validTrade = true;
+        end
+      end
+
+
+    end
+    newTrade = Trade.new(user:self, stock_symbol:trade[:sym].upcase, quantity:trade[:quantity], price:trade[:price], action:trade[:action])
+    if(newTrade && validTrade)
+
+      newTrade.save;
+      self.update_attribute(:balance, newBalance)
+      # byebug
+
+      puts "executed trade!"
+      self.updateStocks(newTrade)
+      puts self.balance
+      return true;
+    else
+      return false;
+    end
+  
+
+  end
+
+  def updateStocks(trade)
+    foundStock = self.stocks.find{|item| item.stock_symbol == trade.stock_symbol};
+    # buybug;
+    if foundStock
+      if(trade[:action] == 'buy')
+        foundStock.quantity = foundStock.quantity + trade[:quantity];
+      elsif trade[:action] == 'sell'
+        foundStock.quantity = foundStock.quantity - trade[:quantity];
+      end
+
+      foundStock.save;
+
+    else
+      newStock = Stock.new(user:self, stock_symbol:trade.stock_symbol, quantity:trade.quantity);
+      if(newStock)
+        newStock.save;
+      else
+        return false;
+      end
+    end
     return true;
   end
 
+  
 
 
 end

@@ -12,7 +12,7 @@ class Stock < ApplicationRecord
           puts "Found!"
           return data = JSON.parse(response.body)
         else
-          return {status:"NOT FOUND"}, :head => 404
+          return {status:"NOT FOUND", head:404}
         end
       }    
   end
@@ -26,7 +26,7 @@ class Stock < ApplicationRecord
         puts "Found!"
         return data = JSON.parse(response.body)
       else
-        return {status:"NOT FOUND"}, :head => 404
+        return {status:"NOT FOUND", head:404}
       end
     }    
 

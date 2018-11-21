@@ -30,17 +30,18 @@ class UsersController < ApplicationController
 
 
     #execute trade transactions
+    #post '/trades/:id'
     def trades
         if(requires_login && authorized?(params[:id]))
             @user = User.find(params[:id])
-            # byebug
             if @user.executeTrade(params[:trade])
-                render json: {trades:@user.trades, stocks: @user.stocks , head:200}
+                # byebug
+                render json: {trades:@user.trades, stocks: @user.stocks, balance:@user.balance, head:200}
             else
-                render json: {ERR: "Aborted! Not enough stocks to sell!", head:501}
+                render json: {ERR: "Aborted! Not enough stocks to sell!", head:500}
             end
         else
-            render json: {Err: "user.errors",:head => 404}
+            render json: {ERR: "user.errors",:head => 404}
         end
 
     end
@@ -50,7 +51,7 @@ class UsersController < ApplicationController
             
             render json: {update:"yes"}
         else
-            render json: {Err: "user.errors"}
+            render json: {ERR: "user.errors"}
         end
     end
 end
