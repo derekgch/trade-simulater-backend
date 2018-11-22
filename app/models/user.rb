@@ -55,7 +55,7 @@ class User < ApplicationRecord
 
   def updateStocks(trade)
     foundStock = self.stocks.find{|item| item.stock_symbol == trade.stock_symbol};
-    # buybug;
+    # byebug;
     if foundStock
       if(trade[:action] == 'buy')
         foundStock.quantity = foundStock.quantity + trade[:quantity];

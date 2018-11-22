@@ -36,7 +36,12 @@ class UsersController < ApplicationController
             @user = User.find(params[:id])
             if @user.executeTrade(params[:trade])
                 # byebug
-                render json: {trades:@user.trades, stocks: @user.stocks, balance:@user.balance, head:200}
+                @user.reload
+                render json: {trades:@user.trades,
+                    user:@user.username, 
+                    stocks: @user.stocks, 
+                    balance:@user.balance, 
+                    head:200}
             else
                 render json: {ERR: "Aborted! Not enough stocks to sell!", head:500}
             end
