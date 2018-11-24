@@ -6,7 +6,6 @@ class UsersController < ApplicationController
             @user = User.find(params[:id])
             render json: {user: @user.username, 
                 stocks:@user.stocks, 
-                trades:@user.trades, 
                 balance: @user.balance,
                 head:200}
         else
@@ -37,8 +36,7 @@ class UsersController < ApplicationController
             if @user.executeTrade(params[:trade])
                 # byebug
                 @user.reload
-                render json: {trades:@user.trades,
-                    user:@user.username, 
+                render json: { user:@user.username, 
                     stocks: @user.stocks, 
                     balance:@user.balance, 
                     head:200}
@@ -50,6 +48,21 @@ class UsersController < ApplicationController
         end
 
     end
+
+    #get trade history
+    #get '/trades/:id'
+
+    def history
+        if(requires_login && authorized?(params[:id]))
+            @user = User.find(params[:id])
+            render json: { user:@user.username, 
+                    trades:@user.trades, 
+                    head:200}
+        else
+            render json: {ERR: "user.errors",:head => 404}
+        end
+    end
+
 
     def update
         if(requires_login && authorized?(params[:id]))

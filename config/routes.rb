@@ -9,7 +9,8 @@ Rails.application.routes.draw do
       get '/batch/:id', to: 'stock#batch'
       get '/price/:id', to: 'stock#price'
   end
-
+  
+  get '/trades/:id', to: 'users#history'
   post '/trades/:id', to: 'users#trades'
 
 end
