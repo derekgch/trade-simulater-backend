@@ -16,7 +16,7 @@ class User < ApplicationRecord
     #trade[:sym], trade[:action], trade[:quantity],trade[:price]
     # byebug
     validTrade = false;
-    if(trade[:action] == "buy")
+    if(trade[:action] == "BUY")
       newBalance = self.balance - trade[:price].to_f*trade[:quantity].to_i;
       # byebug
 
@@ -24,16 +24,15 @@ class User < ApplicationRecord
         validTrade = true;
       end
 
-    elsif (trade[:action]== "sell")
+    elsif (trade[:action]== "SELL")
       newBalance = self.balance + trade[:price].to_f*trade[:quantity].to_i;
-      foundStock = self.stocks.find{|item| item.stock_symbol == trade.stock_symbol};
+      foundStock = self.stocks.find{|item| item.stock_symbol == trade[:sym]};
+      # byebug
       if(foundStock)
-        if foundStock.quantity > trade[:quantity]
+        if foundStock.quantity >= trade[:quantity]
           validTrade = true;
         end
       end
-
-
     end
     newTrade = Trade.new(user:self, stock_symbol:trade[:sym].upcase, quantity:trade[:quantity], price:trade[:price], action:trade[:action])
     if(newTrade && validTrade)
@@ -57,13 +56,16 @@ class User < ApplicationRecord
     foundStock = self.stocks.find{|item| item.stock_symbol == trade.stock_symbol};
     # byebug;
     if foundStock
-      if(trade[:action] == 'buy')
+      if(trade[:action] == 'BUY')
         foundStock.quantity = foundStock.quantity + trade[:quantity];
-      elsif trade[:action] == 'sell'
+      elsif trade[:action] == 'SELL'
         foundStock.quantity = foundStock.quantity - trade[:quantity];
       end
 
       foundStock.save;
+      if(foundStock.quantity == 0)
+        foundStock.delete;
+      end
 
     else
       newStock = Stock.new(user:self, stock_symbol:trade.stock_symbol, quantity:trade.quantity);
