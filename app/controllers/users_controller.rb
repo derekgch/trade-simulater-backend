@@ -55,21 +55,44 @@ class UsersController < ApplicationController
     def history
         if(requires_login && authorized?(params[:id]))
             @user = User.find(params[:id])
-            render json: { user:@user.username, 
-                    trades:@user.trades, 
-                    head:200}
+            @trades = @user.trades.order('trades.created_at DESC')
+            trades = @trades.page(params[:page] ? params[:page].to_i : 1)
+            render json: {trades:trades, meta:pagination_meta(trades) }
+
         else
             render json: {ERR: "user.errors",:head => 404}
         end
     end
 
+    #for testing only
+    # def page
+    #     @user = User.find(params[:id])
+    #     # render json: {trades:@user.trades}
+    #     @trades = @user.trades.order('trades.created_at DESC')
+    #     # byebug
+    #     trades = @trades.page(params[:page] ? params[:page].to_i : 1)
+    #     render json: {trades:trades, meta:pagination_meta(trades) }
 
-    def update
-        if(requires_login && authorized?(params[:id]))
+    # end
+
+
+    # def update
+    #     if(requires_login && authorized?(params[:id]))
             
-            render json: {update:"yes"}
-        else
-            render json: {ERR: "user.errors"}
-        end
+    #         render json: {update:"yes"}
+    #     else
+    #         render json: {ERR: "user.errors"}
+    #     end
+    # end
+
+    private
+    def pagination_meta(object)
+        {
+        current_page: object.current_page,
+        next_page: object.next_page,
+        prev_page: object.prev_page,
+        total_pages: object.total_pages,
+        total_count: object.total_count
+        }
     end
 end

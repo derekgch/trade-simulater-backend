@@ -47,3 +47,8 @@ gem 'rest-client'
 gem 'json'
 gem 'pry'
 gem 'jwt'
+
+gem 'kaminari'
+# gem 'pager_api'
+gem 'active_model_serializers'
+gem 'api-pagination'
