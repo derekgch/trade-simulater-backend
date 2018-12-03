@@ -1,8 +1,9 @@
 # README
-# TTP-FS-20180728-backend
-## This is a Ruby-on-rails backend for TTP-FS-20180728
+# Trade-simulator-backend
+## This is a Ruby-on-rails backend for Trade-simulator
 ### For frontend please check
-https://github.com/derekgch/ttp-fs-20180728-frontend
+https://github.com/derekgch/trade-simulator
+
 
 ### Routes:
 #### API routes: Gateway from transfer data from IEX to these routes
