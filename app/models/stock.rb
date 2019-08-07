@@ -6,7 +6,7 @@ class Stock < ApplicationRecord
 
   def self.getStock(symbol, api_endpoint)
       
-      RestClient.get("#{API_URL}stock/#{symbol}/#{api_endpoint}", headers= { :accept => :json, content_type: :json }){ |response|
+      RestClient.get("#{API_URL}tops?symbols=#{symbol}", headers= { :accept => :json, content_type: :json }){ |response|
         case response.code
         when 200
           puts "Found!"
