@@ -2,11 +2,13 @@ class Stock < ApplicationRecord
   belongs_to :user
 
 
-  API_URL='https://api.iextrading.com/1.0/'
+  # API_URL='https://api.iextrading.com/1.0/'
+  API_URL='https://cloud.iexapis.com/stable/'
+  # https://cloud.iexapis.com/stable/stock/aapl/quote?token=
 
   def self.getStock(symbol, api_endpoint)
-      
-      RestClient.get("#{API_URL}tops?symbols=#{symbol}", headers= { :accept => :json, content_type: :json }){ |response|
+      url = "#{API_URL}stock/#{symbol}/#{api_endpoint}?token="
+      RestClient.get(url, headers= { :accept => :json, content_type: :json }){ |response|
         case response.code
         when 200
           puts "Found!"
