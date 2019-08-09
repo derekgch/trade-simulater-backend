@@ -1,13 +1,17 @@
 class Stock < ApplicationRecord
   belongs_to :user
 
+  # puts 'API TOKEN IS :'
+  # puts ENV['API_TOKEN']
+
 
   # API_URL='https://api.iextrading.com/1.0/'
   API_URL='https://cloud.iexapis.com/stable/'
   # https://cloud.iexapis.com/stable/stock/aapl/quote?token=
+  API_KEY = ENV['API_TOKEN']
 
   def self.getStock(symbol, api_endpoint)
-      url = "#{API_URL}stock/#{symbol}/#{api_endpoint}?token="
+      url = "#{API_URL}stock/#{symbol}/#{api_endpoint}?token=#{API_KEY}"
       RestClient.get(url, headers= { :accept => :json, content_type: :json }){ |response|
         case response.code
         when 200
