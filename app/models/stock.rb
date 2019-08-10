@@ -24,9 +24,10 @@ class Stock < ApplicationRecord
   end
 
 
-  #https://api.iextrading.com/1.0/stock/market/batch?symbols=aapl,fb&types=quote
+  #https://cloud.iexapis.com/stable/stock/market/batch?symbols=aapl,fb&types=quote
   def self.getBatch(symbols, endpoint)
-    RestClient.get("#{API_URL}stock/market/batch?symbols=#{symbols}&types=#{endpoint}", headers= { :accept => :json, content_type: :json }){ |response|
+    url = "#{API_URL}stock/market/batch?symbols=#{symbols}&types=quote&token=#{API_KEY}"
+    RestClient.get(url, headers= { :accept => :json, content_type: :json }){ |response|
       case response.code
       when 200
         puts "Found!"
