@@ -1,9 +1,7 @@
 class Api::StockController < ApplicationController
 
     def search
-        # byebug
         result = Stock.getStock(params[:id], 'quote')
-        # byebug
         render json: result
     end
 
@@ -15,6 +13,11 @@ class Api::StockController < ApplicationController
 
     def batch
         result = Stock.getBatch(params[:id], 'quote')
+        render json: result
+    end
+
+    def chart
+        result = Stock.getChart(params[:id])
         render json: result
     end
 end

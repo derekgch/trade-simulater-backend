@@ -23,3 +23,6 @@
 /config/master.key
 # Ignore local env key
 /config/local_env.yml
+
+# Ignore .env file
+.env

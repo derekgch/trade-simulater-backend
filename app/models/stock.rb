@@ -40,4 +40,17 @@ class Stock < ApplicationRecord
   end
 
 
+  def self.getChart(symbol)
+    url = "#{API_URL}stock/market/batch?symbols=#{symbol}&types=chart&range=1m&token=#{API_KEY}"
+    RestClient.get(url, headers= { :accept => :json, content_type: :json }){ |response|
+      case response.code
+      when 200
+        puts "Found!"
+        return data = JSON.parse(response.body)
+      else
+        return {status:"NOT FOUND", head:404}
+      end
+    }
+  end
+
 end

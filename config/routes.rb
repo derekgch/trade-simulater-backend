@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get '/stock/:id', to: 'stock#search'
       get '/batch/:id', to: 'stock#batch'
       get '/price/:id', to: 'stock#price'
+      get '/chart/:id', to: 'stock#chart'
   end
 
   # testing pagination
