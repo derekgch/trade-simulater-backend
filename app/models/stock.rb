@@ -39,7 +39,7 @@ class Stock < ApplicationRecord
 
   end
 
-
+#https://cloud.iexapis.com/stable/stock/aapl/batch?types=quote,news,chart&range=1m&last=10&token=
   def self.getChart(symbol)
     url = "#{API_URL}stock/market/batch?symbols=#{symbol}&types=chart&range=1m&token=#{API_KEY}"
     RestClient.get(url, headers= { :accept => :json, content_type: :json }){ |response|
