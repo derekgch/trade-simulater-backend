@@ -40,8 +40,8 @@ class Stock < ApplicationRecord
   end
 
 #https://cloud.iexapis.com/stable/stock/aapl/batch?types=quote,news,chart&range=1m&last=10&token=
-  def self.getChart(symbol)
-    url = "#{API_URL}stock/market/batch?symbols=#{symbol}&types=chart&range=1m&token=#{API_KEY}"
+  def self.getChart(symbol,range = '6m')
+    url = "#{API_URL}stock/#{symbol}/chart/#{range}?token=#{API_KEY}"
     RestClient.get(url, headers= { :accept => :json, content_type: :json }){ |response|
       case response.code
       when 200
@@ -53,4 +53,17 @@ class Stock < ApplicationRecord
     }
   end
 
+  def self.getActive()
+    # 'https://cloud.iexapis.com/stable/stock/market/list/mostactive?token=';
+    url=API_URL+'stock/market/list/mostactive?token='+API_KEY
+    RestClient.get(url, headers= { :accept => :json, content_type: :json }){ |response|
+      case response.code
+      when 200
+        puts "Found!"
+        return data = JSON.parse(response.body)
+      else
+        return {status:"NOT FOUND", head:404}
+      end
+    }
+  end
 end

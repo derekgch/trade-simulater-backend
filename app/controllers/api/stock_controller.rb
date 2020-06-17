@@ -17,7 +17,12 @@ class Api::StockController < ApplicationController
     end
 
     def chart
-        result = Stock.getChart(params[:id])
+        result = Stock.getChart(params[:id], params[:range])
+        render json: result
+    end
+
+    def active
+        result = Stock.getActive()
         render json: result
     end
 end
